@@ -1,0 +1,7 @@
+---
+- include: copy.yml
+
+- name: Flamingo | copy_unarchive Set archived file
+  set_fact: flamingo_archived_file={{ flamingo_release_path.stdout }}/{{ flamingo_deploy_from | basename }}
+
+- include: unarchive.yml

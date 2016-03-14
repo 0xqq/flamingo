@@ -1,0 +1,6 @@
+---
+- name: Flamingo | Unarchive | Unarchive source
+  unarchive: copy=no src={{ flamingo_archived_file }} dest={{ flamingo_release_path.stdout }}
+
+- name: Flamingo | Unarchive | Delete archived file
+  file: path={{ flamingo_archived_file }} state=absent

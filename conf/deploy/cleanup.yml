@@ -1,0 +1,5 @@
+---
+# Clean up releases
+- name: Flamingo | Clean up releases
+  shell: ls -1dt {{ flamingo_releases_path.stdout }}/* | tail -n +{{ flamingo_keep_releases | int + 1 }} | xargs rm -rf
+  when: flamingo_keep_releases > 0

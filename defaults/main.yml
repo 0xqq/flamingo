@@ -1,0 +1,78 @@
+---
+
+#######Flamingo('火烈鸟')相关参数定义文件#######
+
+#要部署的项目代码目录源
+flamingo_deploy_from: "{{ flamingo_git_repo_tmp }}/{{ flamingo_product_name }}"
+
+#Deploy配置目录 
+flamingo_deploy_conf: "{{ playbook_dir }}/conf/deploy"
+#部署项目代码到目的目录
+flamingo_deploy_to: "/data/wwwroot"
+
+#已发布版本存放目录
+flamingo_version_dir: "releases"
+
+#当前运行的代码目录
+flamingo_current_dir: "current"
+
+
+
+#代码及web服务用户,代码目录默认用户为www-data,web服务运行默认用户为www
+flamingo_code_run_user: "www-data"
+flamingo_web_service_user: "www"
+
+
+#共享目录shared/logs/,shared/cache/分别表示日志,缓存,配置文件目录,默认用户为{{ flamingo_web_service_user }}即web服务用户,具有可写权限,conf目录默认为www用户
+flamingo_write_shared_paths: [logs,cache]
+
+#共享目录shared/conf/配置文件,默认用户为{{ flamingo_code_run_user }}conf目录默认为www用户
+flamingo_read_shared_paths: [conf]
+
+
+
+#release目录保存发版数量,0表示无限制
+flamingo_keep_releases: 0
+
+
+
+#项目名称，默认是Git仓库项目名称
+flamingo_product_name: "geekwolf"
+
+#项目Git仓库设置,默认从master分支
+flamingo_git_repo: "git@github.com:geekwolf/flamingo.git"
+flamingo_git_branch: master
+#flamingo_git_identity_key_path: ""
+#克隆Git仓库临时存放目录
+flamingo_git_repo_tmp: "/data/.tmp/"
+
+#分发方式rsync/tar/maven,默认是rsync方式,配置该参数自动匹配update-code/{{ flamingo_deploy_via }}目录下的yml文件
+flamingo_deploy_via: "rsync"
+
+#rsync过程如果username@path的username和ansible主机清单中的用户不匹配,这里要设置no
+flamingo_rsync_set_remote_user: yes
+#rsync同步时参数
+flamingo_rsync_extra_params: "--exclude=.git --exclude=*bak --exclude=*bk"
+
+
+#按需设置Ansible任务
+#flamingo_before_setup_tasks_file: "{{ flamingo_deploy_conf }}/my-before-setup-tasks.yml"
+flamingo_setup_tasks_file: "{{ flamingo_deploy_conf }}/setup.yml"
+#flamingo_after_setup_tasks_file: "{{ flamingo_deploy_conf }}/my-after-setup-tasks.yml"
+#flamingo_before_clone_code_tasks_file: "{{ flamingo_deploy_conf }}/my-before-clone-code-tasks.yml"
+flamingo_clone_code_tasks_file: "{{ flamingo_deploy_conf }}/clone-code-tasks.yml"
+#flamingo_after_clone_code_tasks_file: "{{ flamingo_deploy_conf }}/my-after-clone-code-tasks.yml"
+#flamingo_before_update_code_tasks_file: "{{ flamingo_deploy_conf }}/my-before-update-code-tasks.yml"
+flamingo_update_code_tasks_file: "{{ flamingo_deploy_conf }}/update-code.yml"
+#flamingo_after_update_code_tasks_file: "{{ flamingo_deploy_conf }}/my-after-update-code-tasks.yml"
+#flamingo_before_symlink_shared_tasks_file: "{{ flamingo_deploy_conf }}/my-before-symlink-shared-tasks.yml"
+flamingo_symlink_shared_tasks_file: "{{ flamingo_deploy_conf }}/symlink-shared.yml"
+#flamingo_after_symlink_shared_tasks_file: "{{ flamingo_deploy_conf }}/my-after-symlink-shared-tasks.yml"
+#flamingo_before_symlink_tasks_file: "{{ flamingo_deploy_conf }}/my-before-symlink-tasks.yml"
+flamingo_symlink_tasks_file: "{{ flamingo_deploy_conf }}/symlink.yml"
+#flamingo_after_symlink_tasks_file: "{{ flamingo_deploy_conf }}/my-after-symlink-tasks.yml"
+#flamingo_before_cleanup_tasks_file: "{{ flamingo_deploy_conf }}/my-before-cleanup-tasks.yml"
+flamingo_cleanup_tasks_file: "{{ flamingo_deploy_conf }}/cleanup.yml"
+#flamingo_after_cleanup_tasks_file: "{{ flamingo_deploy_conf }}/my-after-cleanup-tasks.yml"
+#构建发布分支推送远端仓库
+flamingo_last_release_file: "{{ flamingo_deploy_conf }}/last-release.yml"

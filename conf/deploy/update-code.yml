@@ -1,0 +1,20 @@
+---
+# Update code deployment step
+- name: Flamingo | Get release version
+  set_fact:
+    flamingo_release_version: "{{ lookup('pipe', 'date -u +%Y%m%d%H%M%SZ') }}"
+  run_once: true
+  when: flamingo_release_version is not defined
+  delegate_to: 127.0.0.1
+
+#- name: Flamingo | Create the product's folder "{{ flamingo_product_name }}"
+  #file: state=directory path={{ flamingo_deploy_to }}/{{ flamingo_current_dir }}/{{ flamingo_product_name }}
+
+- name: Flamingo | Get release path
+  command: echo "{{ flamingo_releases_path.stdout }}/{{flamingo_product_name }}-{{ flamingo_release_version }}"
+  register: flamingo_release_path
+
+- include: "{{ flamingo_deploy_conf }}/update-code/{{ flamingo_deploy_via }}.yml"
+
+- name: Flamingo | Copy release version into REVISION file
+  copy: content={{ flamingo_release_version }} dest={{ flamingo_release_path.stdout }}/REVISION

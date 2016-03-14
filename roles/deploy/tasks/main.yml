@@ -1,0 +1,38 @@
+---
+- name: Flamingo | Check the project's repos
+  fail: msg="error"
+  when: flamingo_git_repo is undefined
+
+- include: "{{ flamingo_before_setup_tasks_file | default('empty.yml') }}"
+
+- include: "{{ flamingo_setup_tasks_file | default('empty.yml') }}"
+
+- include: "{{ flamingo_after_setup_tasks_file | default('empty.yml') }}"
+
+- include: "{{ flamingo_clone_code_tasks_file  | default('empty.yml') }}"
+
+- include: "{{ flamingo_before_update_code_tasks_file | default('empty.yml') }}"
+
+- include: "{{ flamingo_update_code_tasks_file | default('empty.yml') }}"
+
+- include: "{{ flamingo_after_update_code_tasks_file | default('empty.yml') }}"
+
+- include: "{{ flamingo_before_symlink_shared_tasks_file | default('empty.yml') }}"
+
+- include: "{{ flamingo_symlink_shared_tasks_file | default('empty.yml') }}"
+
+- include: "{{ flamingo_after_symlink_shared_tasks_file | default('empty.yml') }}"
+
+- include: "{{ flamingo_before_symlink_tasks_file | default('empty.yml') }}"
+
+- include: "{{ flamingo_symlink_tasks_file | default('empty.yml') }}"
+
+- include: "{{ flamingo_after_symlink_tasks_file | default('empty.yml') }}"
+
+- include: "{{ flamingo_before_cleanup_tasks_file | default('empty.yml') }}"
+
+- include: "{{ flamingo_cleanup_tasks_file  | default('empty.yml') }}"
+
+- include: "{{ flamingo_after_cleanup_tasks_file | default('empty.yml') }}"
+
+- include: "{{ flamingo_last_release_file | default('empty.yml') }}"

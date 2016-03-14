@@ -1,0 +1,8 @@
+---
+- name: Deploy codes to web servers
+  hosts: all
+  vars_files: 
+    - {{ playbook_dir }}/defaults/main.yml
+  roles:
+    - { role: deploy }
+

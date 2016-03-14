@@ -1,0 +1,10 @@
+---
+# Symlinks shared paths
+- name: Flamingo | Create softlinks for shared paths
+  file: state=link path={{ flamingo_deploy_to }}/{{ flamingo_current_dir }}/{{ item }} src={{ flamingo_deploy_to }}/shared/{{ item }} force=yes
+  with_items: flamingo_write_shared_paths
+
+- name: Flamingo | Create softlinks for shared paths
+  file: state=link path={{ flamingo_deploy_to }}/{{ flamingo_current_dir }}/{{ item }} src={{ flamingo_deploy_to }}/shared/{{ item }} force=yes
+  with_items: flamingo_read_shared_paths
+

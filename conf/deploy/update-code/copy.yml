@@ -1,0 +1,6 @@
+---
+- name: Flamingo | SCP | Create release folder
+  file: state=directory path={{ flamingo_release_path.stdout }}
+
+- name: Flamingo | SCP | Deploy existing code to remote servers
+  copy: src={{ flamingo_deploy_from }} dest={{ flamingo_release_path.stdout }}

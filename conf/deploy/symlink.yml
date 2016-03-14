@@ -1,0 +1,4 @@
+---
+# Performs symlink exchange
+- name: Flamingo | Change softlink to new release
+  file: state=link path={{ flamingo_deploy_to }}/{{ flamingo_current_dir }}/{{ flamingo_product_name }} src={{ flamingo_deploy_to }}/{{ flamingo_version_dir }}/{{ flamingo_product_name }}-{{ flamingo_release_version }}

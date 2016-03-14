@@ -1,0 +1,4 @@
+---
+# Create branch like release-20160310181842Z 
+- name: Flamingo | Create the release branch and push to the remote origin
+  shell: cd {{ flamingo_deploy_from }} && git checkout -b release-{{ flamingo_release_version }} && git push origin release-{{ flamingo_release_version }}

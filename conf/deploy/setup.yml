@@ -1,0 +1,46 @@
+---
+# Setup folders
+- name: Flamingo | Ensure run code's account "{{ flamingo_code_run_user }}" exists
+  user: name={{ flamingo_code_run_user }}  shell=/sbin/nologin
+
+- name: Flamingo | Ensure web serivice account "{{ flamingo_web_service_user }}" exists
+  user: name={{ flamingo_web_service_user }}  shell=/sbin/nologin
+ 
+- name: Flamingo | Ensure now run folder exists
+  file: state=directory path={{ flamingo_deploy_to }}/{{ flamingo_current_dir }}
+
+- name: Flamingo | Ensure deployment base path exists
+  file: state=directory path={{ flamingo_deploy_to }}
+
+- name: Flamingo | Set releases path
+  command: echo "{{ flamingo_deploy_to }}/{{ flamingo_version_dir }}"
+  register: flamingo_releases_path
+ 
+- debug: msg={{ flamingo_releases_path }}
+
+- name: Flamingo | Ensure releases folder exists
+  file: state=directory path={{ flamingo_releases_path.stdout }}
+
+- name: Flamingo | Set shared path
+  command: echo "{{ flamingo_deploy_to }}/shared"
+  register: flamingo_shared_path
+
+- name: Flamingo | Ensure shared elements folder exists
+  file: state=directory path={{ flamingo_shared_path.stdout }} 
+
+- name: Flamingo | Set syn codes temp directory
+  command: echo "{{ flamingo_deploy_to }}/.shared-copy"
+  register: flamingo_shared_sync_codes_temp
+
+- debug: msg={{ flamingo_shared_sync_codes_temp }}
+- name: Flamingo | Ensure .shared-copy folder exists
+  file: state=directory path={{ flamingo_shared_sync_codes_temp.stdout }}
+ 
+- name: Flamingo | Ensure shared's logs,cache directory folder exists
+  file: state=directory path={{ flamingo_shared_path.stdout }}/{{ item }} owner={{ flamingo_web_service_user }} group={{ flamingo_web_service_user }} recurse=yes
+  with_items: flamingo_write_shared_paths
+
+- name: Flamingo | Ensure shared's configure of codes folder exists
+  file: state=directory path={{ flamingo_shared_path.stdout }}/{{ item }} owner={{ flamingo_code_run_user }}  group={{ flamingo_code_run_user }} recurse=yes
+  with_items: flamingo_read_shared_paths
+

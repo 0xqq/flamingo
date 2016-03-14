@@ -1,0 +1,4 @@
+---
+# clone code deployment step
+- name: Flamingo | Clone the codes from {{ flamingo_git_repo }} branch {{ flamingo_git_branch }}
+  git: repo={{ flamingo_git_repo }} dest={{ flamingo_git_repo_tmp }}/{{ flamingo_product_name }} accept_hostkey=yes force=yes

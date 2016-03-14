@@ -1,0 +1,10 @@
+---
+- name: Flamingo | RSYNC | Rsync application files to remote shared copy
+  synchronize: src={{ flamingo_deploy_from }}/ dest={{ flamingo_shared_sync_codes_temp.stdout }}/{{ flamingo_product_name }}/ set_remote_user={{ flamingo_rsync_set_remote_user }} recursive=yes delete=yes archive=yes compress=yes   rsync_opts={{ flamingo_rsync_extra_params }}
+
+- name: Flamingo | RSYNC | Deploy existing code to servers
+  synchronize: src={{ flamingo_shared_sync_codes_temp.stdout }}/{{ flamingo_product_name }}/  dest={{ flamingo_release_path.stdout }}/  set_remote_user={{ flamingo_rsync_set_remote_user }} recursive=yes delete=yes archive=yes compress=yes   rsync_opts={{ flamingo_rsync_extra_params }}
+
+- name: Flamingo | RSYNC | Change the release code user to {{ flamingo_code_run_user }}
+  file: path={{ flamingo_release_path.stdout }}/ owner={{ flamingo_code_run_user }} group={{ flamingo_code_run_user }} state=directory recurse=yes
+
