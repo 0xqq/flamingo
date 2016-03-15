@@ -35,4 +35,4 @@
 
 - include: "{{ flamingo_after_cleanup_tasks_file | default('empty.yml') }}"
 
-- include: "{{ flamingo_last_release_file | default('empty.yml') }}"
+#- include: "{{ flamingo_last_release_file | default('empty.yml') }}"
