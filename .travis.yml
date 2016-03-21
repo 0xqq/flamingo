@@ -1,0 +1,12 @@
+language: python
+
+before_install:
+  - sudo apt-get -qq update
+
+apt:
+     sources:
+     - ppa:ansible/ansible
+     packages:
+     - software-properties-common 
+     - ansible
+script: ansible-playbook  deploy.yml  --extra-vars='flamingo_git_repo=https://github.com/geekwolf/flamingo.git flamingo_product_name=flamingo'
