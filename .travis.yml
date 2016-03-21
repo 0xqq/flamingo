@@ -1,9 +1,9 @@
 language: python
 
 before_install:
-  - sudo apt-get install software-properties-common
-  - sudo apt-add-repository ppa:ansible/ansible
-  - sudo apt-get -qq update 
-  - sudo apt-get install ansible
+  - sudo apt-get install -y  software-properties-common
+  - sudo apt-add-repository -y ppa:ansible/ansible
+  - sudo apt-get -y -qq update 
+  - sudo apt-get -y install ansible
 
 script: ansible-playbook  deploy.yml  --extra-vars='flamingo_git_repo=https://github.com/geekwolf/flamingo.git flamingo_product_name=flamingo'
